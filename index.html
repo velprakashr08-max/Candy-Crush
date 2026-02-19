@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍬CANDY CRUSH SAGA </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+      <!-- SPLASH SCREEN (shows first )-->
+       <div id="splash-screen">
+        <div class="splash-content">
+             <h1>🍬 CANDY CRUSH</h1>
+             <p class="tagline">Match 3 or more to crush!</p>
+             <button id="start-btn" class="pulse">👉 TAP TO START 👈</button>
+        </div>
+       </div>
+
+       <!--LOGIN/REGISTER SCREEN-->
+       <div id="auth-screen" class="hidden">
+        <div class="auth-container">
+            <div class="auth-tabs">
+                <button class="tab active" data-tab="login">🔑 LOGIN</button>
+                <button class="tab" data-tab="register">📝 REGISTER</button>
+            </div>
+
+            <!-- LOGIN FORM-->
+             <div id="login-form" class="auth-form active">
+                <h2>Welcome Back!</h2>
+                <div class="input-group">
+                    <label>👤 Player Name</label>
+                    <input type="text" id="login-name" placeholder="Enter your name">
+                </div>
+                <button id="login-btn" class="auth-btn">▶️ START GAME</button>
+                <div id="login-message" class="message"></div>
+             </div>
+
+             <!-- REGISTER FORM-->
+               <div id="register-form" class="auth-form">
+                <h2>New Player!</h2>
+                <div class="input-group">
+                    <label>👤 Choose Your Name </label>
+                    <input type="text" id="reg-name" placeholder="Enter Your Name">
+                </div>
+                <div class="input-group">
+                    <label>Favourite Color</label>
+                    <select id="reg-color">
+                        <option value="Red">Red</option>
+                        <option value="Blue">Blue</option>
+                        <option value="Green">Green</option>
+                        <option value="Yellow">Yellow</option>
+                        <option value="Purple">Purple</option>
+                        <option value="Orange">Orange</option>
+                    </select>
+                </div>
+                <button id="register-btn" class="auth-btn"> Create Account</button>
+
+                <div id="register-message" class="message"></div>
+               </div>
+        </div>
+       </div>
+
+       <!-- Main Screen Game -->
+        <div id="menu-screen" class="hidden">
+            <div class="menu-container">
+                <div class="player-info">
+                    <div class="player-avatar" id="player-avatar">🍬</div>
+                    <div class="player-details">
+                        <h2 id="player-name-display">Player</h2>
+                        <div class="player-stats">
+                            <span>⭐ Level: <span id="player-level">1</span></span>
+                            <span> 💸Coins: <span id="player-coins">1000</span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-buttons">
+                    <button id="play-btn" class="menu-btn primary">🎮 PLAY GAME</button>
+                    <button id="boosters-btn" class="menu-btn">⚡ Boosters</button>
+                    <button id="howto-btn" class="menu-btn">❓ HOW TO PLAY</button>
+                    <button id="logout-btn" class="menu-btn logout">🚪 LOGOUT</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- LEVEL SELECT SCREEN -->
+         <div id="level-select-screen" class="hidden">
+            <div class="level-header">
+                <button id="back-to-menu" class="back-btn">BACK TO MENU</button>
+                <h2> Select Level</h2>
+                <div class="player-coins-header">💸<span id="header-coins">1000</span></div>
+            </div>
+            <div id="worlds-container" class="worlds-container" ></div>
+         </div>
+
+
+         <!-- Game Screen -->
+          <div id="game-screen" class="hidden">
+            <div class="game-header">
+                <button id="game-back-btn" class="back-btn">Exit</button>
+                <div class="level-info" >
+                    <span id="level-name-display">Level-1</span>
+                    <span class="stars" id="stars-display">⭐⭐⭐</span>
+                </div>
+                <div class="game-stats">
+                    <div class="stat">🎯<span id="target-score">5000</span></div>
+                    <div class="stat">💯<span id="current-score">0</span></div>
+                    <div class="stat">🔁<span id="moves-left">20</span></div>
+                    <div class="stat">⏱️<span id="timer-display">00:00</span></div>
+                </div>
+            </div>
+
+            <!-- Booster Bar -->
+             <div id="booster-bar" class="booster-bar"></div>
+            <div id="game-board" class="game-board"></div>
+
+            <!-- Game Controls -->
+             <div class="game-controls">
+                <button id="hint-btn" class="control-btn">💡HINT</button>
+                <button id="shuffle-btn" class="control-btn">🔀 Shuffle</button>
+             </div>
+          </div>
+          <!-- Victory Screen -->
+           <div id="victory-screen" class="hidden">
+             <div class="victory-container">
+                <h1>🎉Victory!🎉</h1>
+                <div class="victory-stars" id="victory-stars">⭐⭐⭐</div>
+                <p>Level <span id="victory-level">1</span> Complete !</p>
+                <div class="victory-stats">
+                    <p>Score:<span id="victory-score">0</span></p>
+                    <p>Moves Left:<span id="victory-moves">0</span></p>
+                    <p>Coines Earned: <span id="victory-coins">0</span>🪙</p>
+                </div>
+
+                <div class="victory-buttons">
+                    <button id="next-level-btn" class="victory-btn">Next Level</button>
+                    <button id="replay-level-btn" class="victory-btn">Replay</button>
+                    <button id="victory-menu-btn" class="victory-btn">Back to Menu</button>
+                </div>
+             </div>
+           </div>
+
+
+           <!-- Game Over Screen -->
+            <div id="gameover-screen" class="hidden">
+                <div class="gameover-container">
+                    <h1>🥲 GAME OVER</h1>
+                    <p> Better Luck next Time!</p>
+                    <div class="gameover-buttons">
+                        <button id="try-again-btn" class="gameover-btn">Try Again</button>
+                        <button id="gameover-menu-btn" class="gameover-btn">Back to Menu</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- How To Play Modal -->
+             <div id="howto-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h2>How To Play</h2>
+                    <div class="howto-content">
+                        <div class="howto-section">
+                            <h3>Objective</h3>
+                            <p>Match 3 or more candies of the same color to reach the target score before running out of moves!</p>
+
+                        </div>
+                        <div class="howto-section">
+                            <h3>Special Controls</h3>
+                            <p> Click on a candy to select it, then click on an adjacent candy to swap them. If it creates a match of 3+, they'll disappear!  and you'll score points.</p>
+                        </div>
+                        <div class="howto-section">
+                            <h3>⭐ Special Candies</h3>
+                            <div class="special-grid">
+                                <div><img src="images/Red-Striped-Horizontal.png" class="candy-icon">=Clear entire Row</div>
+                                <div><img src="images/Red-Striped-Vertical.png" class="candy-icon">=Clear entire Column</div>
+                                <div><img src="images/Red-Wrapped.png" class="candy-icon">=Clear 3x3 area</div>
+                            </div>
+
+                        </div>
+                        <div class="howto-section">
+                            <h3> ⚡Power-Ups</h3>
+                            <p>Use boosters like Hammer, UFO, and Extra moves to help you through difficult levels.</p>
+                        </div>
+
+                        <div class="howto-section">
+                            <h3>🌟 Tips & Tricks</h3>
+                            <ul>
+                                <li> Match 4 candies to create striped candies</li>
+                                <li> Match 5 candies to create color bomb</li>
+                                <li> Combine special candies for massive points!</li>
+                                <li> Plan your moves ahead</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <button id="close-howto" class="modal-btn"> GOT IT !</button>
+                </div>
+             </div>
+
+             <!-- Booster Shop Modal -->
+              <div id="booster-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h2>Booster Shop</h2>
+                    <div id="booster-shop" class="booster-shop"></div>
+                    <div class="modal-footer">
+                        <span>💸 Your Coins: <span id="shop-coins">1000</span></span>
+                        <button id="close-booster" class="modal-btn">CLOSE</button>
+                    </div>
+                </div>
+              </div>
+
+              <script src="script.js"></script>
+</body>
+</html>
