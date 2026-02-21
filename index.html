@@ -2,212 +2,550 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍬CANDY CRUSH SAGA </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Candy Crush Saga</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body>
-      <!-- SPLASH SCREEN (shows first )-->
-       <div id="splash-screen">
-        <div class="splash-content">
-             <h1>🍬 CANDY CRUSH</h1>
-             <p class="tagline">Match 3 or more to crush!</p>
-             <button id="start-btn" class="pulse">👉 TAP TO START 👈</button>
-        </div>
-       </div>
+<body>                           
 
-       <!--LOGIN/REGISTER SCREEN-->
-       <div id="auth-screen" class="hidden">
-        <div class="auth-container">
-            <div class="auth-tabs">
-                <button class="tab active" data-tab="login">🔑 LOGIN</button>
-                <button class="tab" data-tab="register">📝 REGISTER</button>
+    <div id="start-screen" class="screen start-screen" >
+        <!-- Top-right: Shop + Profile (outside start-content so absolute pos works) -->
+        <div class="start-top-right">
+            <div class="start-icon-group">
+                <button id="start-shop-btn" class="shop-icon-btn" title="Shop">
+                    <img src="images/shop.png" alt="Shop">
+                </button>
+                <span class="start-icon-label">Shop</span>
+            </div>
+            <button id="profile-open-btn" class="profile-chip">
+                <span id="hud-avatar" class="hud-avatar">🍬</span>
+                <span id="hud-name" class="hud-name">Player</span>
+            </button>
+        </div>
+        <!-- Top-left: Coins + Music -->
+        <div class="start-top-left">
+            <div class="coin-chip" id="start-coin-chip">
+                <span class="coin-icon">🪙</span>
+                <span class="coin-count-display">0</span>
+            </div>
+            <button id="music-toggle-btn" class="music-toggle-btn" title="Toggle Music">🎵</button>
+        </div>
+       <div class="start-content">
+            <h1 class="start-title">                       
+                <span class="title-candy">CANDY</span>
+                <span class="title-crush">CRUSH</span>          
+                <span class="title-saga">SAGA</span>              
+            </h1>  
+            <button id="start-btn" class="start-play-btn">
+                <span>PLAY</span>
+            </button>
+            <button id="how-to-play-btn" class="how-to-play-open-btn">HOW TO PLAY</button>
+            <div class="start-candy-row">
+                <img src="images/Red.png" class="float-candy" style="--delay:0s" alt="">
+                <img src="images/Blue.png" class="float-candy" style="--delay:0.3s" alt="">
+                <img src="images/Green.png" class="float-candy" style="--delay:0.6s" alt="">
+                <img src="images/Yellow.png" class="float-candy" style="--delay:0.9s" alt="">
+                <img src="images/Orange.png" class="float-candy" style="--delay:1.2s" alt="">
+                <img src="images/Purple.png" class="float-candy" style="--delay:1.5s" alt="">
+            </div>
+        </div>
+    </div>
+
+
+    <div id="profile-screen" class="htp-overlay hidden">
+        <div class="htp-modal profile-modal">
+            <button class="htp-close-btn" id="profile-close-btn">&#x2715;</button>
+            <h2 class="htp-title">My Profile</h2>
+
+            
+            <div class="avatar-section">
+                <div class="avatar-display" id="avatar-display">🍬</div>
+                <div class="avatar-grid">
+                    <button class="av-btn" data-av="🍬">🍬</button>
+                    <button class="av-btn" data-av="🍭">🍭</button>
+                    <button class="av-btn" data-av="🍫">🍫</button>
+                    <button class="av-btn" data-av="🍩">🍩</button>
+                    <button class="av-btn" data-av="🍪">🍪</button>
+                    <button class="av-btn" data-av="🎂">🎂</button>
+                    <button class="av-btn" data-av="🌈">🌈</button>
+                    <button class="av-btn" data-av="⭐">⭐</button>
+                    <button class="av-btn" data-av="🔥">🔥</button>
+                    <button class="av-btn" data-av="💎">💎</button>
+                    <button class="av-btn" data-av="🦄">🦄</button>
+                    <button class="av-btn" data-av="👑">👑</button>
+                </div>
             </div>
 
-            <!-- LOGIN FORM-->
-             <div id="login-form" class="auth-form active">
-                <h2>Welcome Back!</h2>
-                <div class="input-group">
-                    <label>👤 Player Name</label>
-                    <input type="text" id="login-name" placeholder="Enter your name">
-                </div>
-                <button id="login-btn" class="auth-btn">▶️ START GAME</button>
-                <div id="login-message" class="message"></div>
-             </div>
+            <div class="profile-name-row">
+                <label class="profile-label">Your Name</label>
+                <input id="profile-name-input" class="profile-input" type="text"
+                       maxlength="16" placeholder="Enter your name...">
+            </div>
 
-             <!-- REGISTER FORM-->
-               <div id="register-form" class="auth-form">
-                <h2>New Player!</h2>
-                <div class="input-group">
-                    <label>👤 Choose Your Name </label>
-                    <input type="text" id="reg-name" placeholder="Enter Your Name">
+            
+            <div class="profile-stats-grid">
+                <div class="pstat">
+                    <span class="pstat-val" id="pstat-levels">0</span>
+                    <span class="pstat-label">Levels Won</span>
                 </div>
-                <div class="input-group">
-                    <label>Favourite Color</label>
-                    <select id="reg-color">
-                        <option value="Red">Red</option>
-                        <option value="Blue">Blue</option>
-                        <option value="Green">Green</option>
-                        <option value="Yellow">Yellow</option>
-                        <option value="Purple">Purple</option>
-                        <option value="Orange">Orange</option>
-                    </select>
+                <div class="pstat">
+                    <span class="pstat-val" id="pstat-stars">0</span>
+                    <span class="pstat-label">Total Stars</span>
                 </div>
-                <button id="register-btn" class="auth-btn"> Create Account</button>
+                <div class="pstat">
+                    <span class="pstat-val" id="pstat-best">0</span>
+                    <span class="pstat-label">Top Score</span>
+                </div>
+            </div>
 
-                <div id="register-message" class="message"></div>
-               </div>
+            <button class="htp-got-it-btn" id="profile-save-btn">Save Profile</button>
         </div>
-       </div>
+    </div>
 
-       <!-- Main Screen Game -->
-        <div id="menu-screen" class="hidden">
-            <div class="menu-container">
-                <div class="player-info">
-                    <div class="player-avatar" id="player-avatar">🍬</div>
-                    <div class="player-details">
-                        <h2 id="player-name-display">Player</h2>
-                        <div class="player-stats">
-                            <span>⭐ Level: <span id="player-level">1</span></span>
-                            <span> 💸Coins: <span id="player-coins">1000</span></span>
-                        </div>
+    <!-- ========== SHOP MODAL ========== -->
+    <div id="shop-screen" class="htp-overlay hidden">
+        <div class="htp-modal shop-modal">
+            <button class="htp-close-btn" id="shop-close-btn">&#x2715;</button>
+            <h2 class="htp-title">Sweet Shop</h2>
+            <div class="shop-coins-bar">
+                <span class="coin-icon">🪙</span>
+                <span id="shop-coin-count">0</span>&nbsp;Coins
+            </div>
+            <div class="shop-items">
+                <!-- Row Blast -->
+                <div class="shop-item">
+                    <img src="images/Red-Striped-Horizontal.png" class="shop-item-img" alt="">
+                    <div class="shop-item-info">
+                        <span class="shop-item-name">Row Blast</span>
+                        <span class="shop-item-desc">Clears an entire row</span>
+                        <span class="shop-item-own">Owned: <b id="own-rowBlast">0</b></span>
+                    </div>
+                    <button class="shop-buy-btn" data-item="rowBlast" data-cost="80">🪙 80</button>
+                </div>
+                <!-- Col Blast -->
+                <div class="shop-item">
+                    <img src="images/Red-Striped-Vertical.png" class="shop-item-img" alt="">
+                    <div class="shop-item-info">
+                        <span class="shop-item-name">Col Blast</span>
+                        <span class="shop-item-desc">Clears an entire column</span>
+                        <span class="shop-item-own">Owned: <b id="own-colBlast">0</b></span>
+                    </div>
+                    <button class="shop-buy-btn" data-item="colBlast" data-cost="80">🪙 80</button>
+                </div>
+                <!-- Wrapped Blast -->
+                <div class="shop-item">
+                    <img src="images/Red-Wrapped.png" class="shop-item-img" alt="">
+                    <div class="shop-item-info">
+                        <span class="shop-item-name">Wrapped Blast</span>
+                        <span class="shop-item-desc">3×3 explosion at center</span>
+                        <span class="shop-item-own">Owned: <b id="own-wrappedBlast">0</b></span>
+                    </div>
+                    <button class="shop-buy-btn" data-item="wrappedBlast" data-cost="100">🪙 100</button>
+                </div>
+                <!-- Color Bomb -->
+                <div class="shop-item">
+                    <img src="images/Choco.png" class="shop-item-img" alt="">
+                    <div class="shop-item-info">
+                        <span class="shop-item-name">Color Bomb</span>
+                        <span class="shop-item-desc">Destroys all of one color</span>
+                        <span class="shop-item-own">Owned: <b id="own-colorBomb">0</b></span>
+                    </div>
+                    <button class="shop-buy-btn" data-item="colorBomb" data-cost="120">🪙 120</button>
+                </div>
+                <!-- Extra Moves -->
+                <div class="shop-item">
+                    <div class="shop-extra-moves-img">+5</div>
+                    <div class="shop-item-info">
+                        <span class="shop-item-name">Extra Moves</span>
+                        <span class="shop-item-desc">Adds 5 moves instantly</span>
+                        <span class="shop-item-own">Owned: <b id="own-extraMoves">0</b></span>
+                    </div>
+                    <button class="shop-buy-btn" data-item="extraMoves" data-cost="150">🪙 150</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="how-to-play-screen" class="htp-overlay hidden">
+        <div class="htp-modal">
+            <button class="htp-close-btn" id="htp-close-btn">&#x2715;</button>
+            <h2 class="htp-title">HOW TO PLAY</h2>
+            <div class="htp-steps">
+                <div class="htp-step">
+                    <div class="htp-step-icon">🍬</div>
+                    <div class="htp-step-text">
+                        <strong>Swap Candies</strong>
+                        <p>Click or Drag two adjacent candies to swap their positions.</p>
                     </div>
                 </div>
-                <div class="menu-buttons">
-                    <button id="play-btn" class="menu-btn primary">🎮 PLAY GAME</button>
-                    <button id="boosters-btn" class="menu-btn">⚡ Boosters</button>
-                    <button id="howto-btn" class="menu-btn">❓ HOW TO PLAY</button>
-                    <button id="logout-btn" class="menu-btn logout">🚪 LOGOUT</button>
+                <div class="htp-step">
+                    <div class="htp-step-icon">🌟</div>
+                    <div class="htp-step-text">
+                        <strong>Match 3 or More</strong>
+                        <p>Line up 3+ candies of the same color in the row or column to crush them.</p>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- LEVEL SELECT SCREEN -->
-         <div id="level-select-screen" class="hidden">
-            <div class="level-header">
-                <button id="back-to-menu" class="back-btn">BACK TO MENU</button>
-                <h2> Select Level</h2>
-                <div class="player-coins-header">💸<span id="header-coins">1000</span></div>
-            </div>
-            <div id="worlds-container" class="worlds-container" ></div>
-         </div>
-
-
-         <!-- Game Screen -->
-          <div id="game-screen" class="hidden">
-            <div class="game-header">
-                <button id="game-back-btn" class="back-btn">Exit</button>
-                <div class="level-info" >
-                    <span id="level-name-display">Level-1</span>
-                    <span class="stars" id="stars-display">⭐⭐⭐</span>
+                <div class="htp-step">
+                    <div class="htp-step-icon">⭐</div>
+                    <div class="htp-step-text">
+                        <strong>Reach the Target</strong>
+                        <p>Score enough points before your moves runout to earn stars and win!</p>
+                    </div>
                 </div>
-                <div class="game-stats">
-                    <div class="stat">🎯<span id="target-score">5000</span></div>
-                    <div class="stat">💯<span id="current-score">0</span></div>
-                    <div class="stat">🔁<span id="moves-left">20</span></div>
-                    <div class="stat">⏱️<span id="timer-display">00:00</span></div>
-                </div>
-            </div>
-
-            <!-- Booster Bar -->
-             <div id="booster-bar" class="booster-bar"></div>
-            <div id="game-board" class="game-board"></div>
-
-            <!-- Game Controls -->
-             <div class="game-controls">
-                <button id="hint-btn" class="control-btn">💡HINT</button>
-                <button id="shuffle-btn" class="control-btn">🔀 Shuffle</button>
-             </div>
-          </div>
-          <!-- Victory Screen -->
-           <div id="victory-screen" class="hidden">
-             <div class="victory-container">
-                <h1>🎉Victory!🎉</h1>
-                <div class="victory-stars" id="victory-stars">⭐⭐⭐</div>
-                <p>Level <span id="victory-level">1</span> Complete !</p>
-                <div class="victory-stats">
-                    <p>Score:<span id="victory-score">0</span></p>
-                    <p>Moves Left:<span id="victory-moves">0</span></p>
-                    <p>Coines Earned: <span id="victory-coins">0</span>🪙</p>
-                </div>
-
-                <div class="victory-buttons">
-                    <button id="next-level-btn" class="victory-btn">Next Level</button>
-                    <button id="replay-level-btn" class="victory-btn">Replay</button>
-                    <button id="victory-menu-btn" class="victory-btn">Back to Menu</button>
-                </div>
-             </div>
-           </div>
-
-
-           <!-- Game Over Screen -->
-            <div id="gameover-screen" class="hidden">
-                <div class="gameover-container">
-                    <h1>🥲 GAME OVER</h1>
-                    <p> Better Luck next Time!</p>
-                    <div class="gameover-buttons">
-                        <button id="try-again-btn" class="gameover-btn">Try Again</button>
-                        <button id="gameover-menu-btn" class="gameover-btn">Back to Menu</button>
+                <div class="htp-step">
+                    <div class="htp-step-icon">💥</div>
+                    <div class="htp-step-text">
+                        <strong>Special Candies</strong>
+                        <p>Match 4 in a row for a Striped Candy. Match 5 for a Rainbow candy that clears any color!</p>
                     </div>
                 </div>
             </div>
+            <button class="htp-got-it-btn" id="htp-got-it-btn">Got IT!</button>
+        </div>
+    </div>
 
+    <div id="level-screen" class="screen level-screen hidden">
+        <div class="level-header-bar">
+            <button id="level-shop-btn" class="shop-icon-btn small" title="Shop">
+                <img src="images/shop.png" alt="Shop">
+            </button>
+            <div class="level-header-center">
+                <h2 class="level-screen-title">Select Level</h2>
+                <div class="coin-chip level-coin-chip">
+                    <span class="coin-icon">🪙</span>
+                    <span class="coin-count-display">0</span>
+                </div>
+            </div>
+            <button id="level-profile-btn" class="profile-chip small">
+                <span id="level-hud-avatar" class="hud-avatar">🍬</span>
+                <span id="level-hud-name" class="hud-name">Player</span>
+            </button>
+        </div>
+        <div class="level-map-scroll">
+            <div class="level-map">
 
-            <!-- How To Play Modal -->
-             <div id="howto-modal" class="modal hidden">
-                <div class="modal-content">
-                    <h2>How To Play</h2>
-                    <div class="howto-content">
-                        <div class="howto-section">
-                            <h3>Objective</h3>
-                            <p>Match 3 or more candies of the same color to reach the target score before running out of moves!</p>
-
-                        </div>
-                        <div class="howto-section">
-                            <h3>Special Controls</h3>
-                            <p> Click on a candy to select it, then click on an adjacent candy to swap them. If it creates a match of 3+, they'll disappear!  and you'll score points.</p>
-                        </div>
-                        <div class="howto-section">
-                            <h3>⭐ Special Candies</h3>
-                            <div class="special-grid">
-                                <div><img src="images/Red-Striped-Horizontal.png" class="candy-icon">=Clear entire Row</div>
-                                <div><img src="images/Red-Striped-Vertical.png" class="candy-icon">=Clear entire Column</div>
-                                <div><img src="images/Red-Wrapped.png" class="candy-icon">=Clear 3x3 area</div>
+                
+                <div class="map-row ltr">
+                    <div class="level-card unlocked" data-level="1">
+                        <div class="node-inner">
+                            <span class="node-num">1</span>
+                            <div class="level-stars" id="stars-1">
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
                             </div>
-
                         </div>
-                        <div class="howto-section">
-                            <h3> ⚡Power-Ups</h3>
-                            <p>Use boosters like Hammer, UFO, and Extra moves to help you through difficult levels.</p>
-                        </div>
-
-                        <div class="howto-section">
-                            <h3>🌟 Tips & Tricks</h3>
-                            <ul>
-                                <li> Match 4 candies to create striped candies</li>
-                                <li> Match 5 candies to create color bomb</li>
-                                <li> Combine special candies for massive points!</li>
-                                <li> Plan your moves ahead</li>
-                            </ul>
-                        </div>
-
+                        <div class="node-name">Sweet Start</div>
+                        <button class="level-play-btn">PLAY</button>
                     </div>
-                    <button id="close-howto" class="modal-btn"> GOT IT !</button>
-                </div>
-             </div>
-
-             <!-- Booster Shop Modal -->
-              <div id="booster-modal" class="modal hidden">
-                <div class="modal-content">
-                    <h2>Booster Shop</h2>
-                    <div id="booster-shop" class="booster-shop"></div>
-                    <div class="modal-footer">
-                        <span>💸 Your Coins: <span id="shop-coins">1000</span></span>
-                        <button id="close-booster" class="modal-btn">CLOSE</button>
+                    <div class="path-h"></div>
+                    <div class="level-card locked" data-level="2" id="level-card-2">
+                        <div class="node-inner">
+                            <span class="node-num">2</span>
+                            <div class="level-stars" id="stars-2">
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                            </div>
+                            <div class="lock-overlay"><span class="lock-icon"><i class="icon-lock"></i></span></div>
+                        </div>
+                        <div class="node-name">Candy Storm</div>
+                        <button class="level-play-btn" disabled>LOCKED</button>
                     </div>
                 </div>
-              </div>
+                <div class="path-turn tr"></div>
 
-              <script src="script.js"></script>
-</body>
+                
+                <div class="map-row rtl">
+                    <div class="level-card locked" data-level="4" id="level-card-4">
+                        <div class="node-inner">
+                            <span class="node-num">4</span>
+                            <div class="level-stars" id="stars-4">
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                            </div>
+                            <div class="lock-overlay"><span class="lock-icon"><i class="icon-lock"></i></span></div>
+                        </div>
+                        <div class="node-name">Jelly Jam</div>
+                        <button class="level-play-btn" disabled>LOCKED</button>
+                    </div>
+                    <div class="path-h"></div>
+                    <div class="level-card locked" data-level="3" id="level-card-3">
+                        <div class="node-inner">
+                            <span class="node-num">3</span>
+                            <div class="level-stars" id="stars-3">
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                            </div>
+                            <div class="lock-overlay"><span class="lock-icon"><i class="icon-lock"></i></span></div>
+                        </div>
+                        <div class="node-name">Sugar Rush</div>
+                        <button class="level-play-btn" disabled>LOCKED</button>
+                    </div>
+                </div>
+                <div class="path-turn tl"></div>
+
+                
+                <div class="map-row ltr">
+                    <div class="level-card locked" data-level="5" id="level-card-5">
+                        <div class="node-inner">
+                            <span class="node-num">5</span>
+                            <div class="level-stars" id="stars-5">
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                            </div>
+                            <div class="lock-overlay"><span class="lock-icon"><i class="icon-lock"></i></span></div>
+                        </div>
+                        <div class="node-name">Candy Blizzard</div>
+                        <button class="level-play-btn" disabled>LOCKED</button>
+                    </div>
+                    <div class="path-h"></div>
+                    <div class="level-card locked" data-level="6" id="level-card-6">
+                        <div class="node-inner">
+                            <span class="node-num">6</span>
+                            <div class="level-stars" id="stars-6">
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                            </div>
+                            <div class="lock-overlay"><span class="lock-icon"><i class="icon-lock"></i></span></div>
+                        </div>
+                        <div class="node-name">Neon Sweets</div>
+                        <button class="level-play-btn" disabled>LOCKED</button>
+                    </div>
+                </div>
+                <div class="path-turn tr"></div>
+
+                
+                <div class="map-row rtl">
+                    <div class="level-card locked" data-level="8" id="level-card-8">
+                        <div class="node-inner">
+                            <span class="node-num">8</span>
+                            <div class="level-stars" id="stars-8">
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                            </div>
+                            <div class="lock-overlay"><span class="lock-icon"><i class="icon-lock"></i></span></div>
+                        </div>
+                        <div class="node-name">Sugar Fiesta</div>
+                        <button class="level-play-btn" disabled>LOCKED</button>
+                    </div>
+                    <div class="path-h"></div>
+                    <div class="level-card locked" data-level="7" id="level-card-7">
+                        <div class="node-inner">
+                            <span class="node-num">7</span>
+                            <div class="level-stars" id="stars-7">
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                            </div>
+                            <div class="lock-overlay"><span class="lock-icon"><i class="icon-lock"></i></span></div>
+                        </div>
+                        <div class="node-name">Rainbow Road</div>
+                        <button class="level-play-btn" disabled>LOCKED</button>
+                    </div>
+                </div>
+                <div class="path-turn tl"></div>
+
+                
+                <div class="map-row ltr">
+                    <div class="level-card locked" data-level="9" id="level-card-9">
+                        <div class="node-inner">
+                            <span class="node-num">9</span>
+                            <div class="level-stars" id="stars-9">
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                            </div>
+                            <div class="lock-overlay"><span class="lock-icon"><i class="icon-lock"></i></span></div>
+                        </div>
+                        <div class="node-name">Candy Chaos</div>
+                        <button class="level-play-btn" disabled>LOCKED</button>
+                    </div>
+                    <div class="path-h"></div>
+                    <div class="level-card locked" data-level="10" id="level-card-10">
+                        <div class="node-inner">
+                            <span class="node-num">10</span>
+                            <div class="level-stars" id="stars-10">
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                            </div>
+                            <div class="lock-overlay"><span class="lock-icon"><i class="icon-lock"></i></span></div>
+                        </div>
+                        <div class="node-name">Sugar Peak</div>
+                        <button class="level-play-btn" disabled>LOCKED</button>
+                    </div>
+                </div>
+                <div class="path-turn tr"></div>
+
+        
+                <div class="map-row rtl">
+                    <div class="level-card locked" data-level="12" id="level-card-12">
+                        <div class="node-inner">
+                            <span class="node-num">12</span>
+                            <div class="level-stars" id="stars-12">
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                            </div>
+                            <div class="lock-overlay"><span class="lock-icon"><i class="icon-lock"></i></span></div>
+                        </div>
+                        <div class="node-name">Sweet Apocalypse</div>
+                        <button class="level-play-btn" disabled>LOCKED</button>
+                    </div>
+                    <div class="path-h"></div>
+                    <div class="level-card locked" data-level="11" id="level-card-11">
+                        <div class="node-inner">
+                            <span class="node-num">11</span>
+                            <div class="level-stars" id="stars-11">
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                                <span class="star empty"><i class="icon-star"></i></span>
+                            </div>
+                            <div class="lock-overlay"><span class="lock-icon"><i class="icon-lock"></i></span></div>
+                        </div>
+                        <div class="node-name">Candy Kingdom</div>
+                        <button class="level-play-btn" disabled>LOCKED</button>
+                    </div>
+                </div>
+
+                <div class="level-map-end">
+                    <img src="images/Red-Wrapped.png" class="deco-candy dc1" alt="">
+                    <img src="images/Blue-Striped-Horizontal.png" class="deco-candy dc2" alt="">
+                    <img src="images/Green-Wrapped.png" class="deco-candy dc3" alt="">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="game-screen" class="screen game-screen hidden">
+        <div class="game-ui">
+        
+            <div class="game-top-bar">
+                <button id="game-back-btn" class="game-icon-btn"><i class="icon-close"></i></button>
+                <div class="game-info-bar">
+                    <div class="info-block target-block">
+                        <span class="info-label">TARGET</span>
+                        <span class="info-value" id="target-score">3000</span>
+                    </div>
+                    <div class="info-block score-block">    
+                        <span class="info-label">SCORE</span>
+                        <span class="info-value" id="current-score">0</span>
+                    </div>
+                    <div class="info-block moves-block">
+                        <span class="info-label">MOVES</span>
+                        <span class="info-value" id="moves-left">25</span>
+                    </div>
+                </div>
+                <button id="game-shop-btn" class="shop-icon-btn small" title="Shop">
+                    <img src="images/shop.png" alt="Shop">
+                </button>
+            </div>
+            
+            <div class="progress-bar-wrap">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                </div>
+                <div class="progress-stars">
+                    <span class="p-star" data-at="33" id="pstar1"><i class="icon-star"></i></span>
+                    <span class="p-star" data-at="66" id="pstar2"><i class="icon-star"></i></span>
+                    <span class="p-star" data-at="98" id="pstar3"><i class="icon-star"></i></span>
+                </div>
+            </div>
+        
+            <div class="combo-display hidden" id="combo-display">
+                <span class="combo-text" id="combo-text">COMBO x2!</span>
+            </div>
+     
+            <div class="board-wrapper">
+                <div id="game-board" class="game-board"></div>
+                <div id="score-popups" class="score-popups"></div>
+            </div>
+        
+            <div class="game-controls">
+                <button id="hint-btn" class="ctrl-btn"><i class="icon-hint"></i> Hint</button>
+                <button id="shuffle-btn" class="ctrl-btn"><i class="icon-shuffle"></i> Shuffle</button>
+            </div>
+            <!-- Powerup Bar -->
+            <div class="powerup-bar" id="powerup-bar">
+                <button class="pu-btn" id="pu-rowBlast" data-pu="rowBlast" title="Row Blast" disabled>
+                    <img src="images/Red-Striped-Horizontal.png" alt="">
+                    <span class="pu-count" id="pu-count-rowBlast">0</span>
+                </button>
+                <button class="pu-btn" id="pu-colBlast" data-pu="colBlast" title="Col Blast" disabled>
+                    <img src="images/Red-Striped-Vertical.png" alt="">
+                    <span class="pu-count" id="pu-count-colBlast">0</span>
+                </button>
+                <button class="pu-btn" id="pu-wrappedBlast" data-pu="wrappedBlast" title="Wrapped Blast" disabled>
+                    <img src="images/Red-Wrapped.png" alt="">
+                    <span class="pu-count" id="pu-count-wrappedBlast">0</span>
+                </button>
+                <button class="pu-btn" id="pu-colorBomb" data-pu="colorBomb" title="Color Bomb" disabled>
+                    <img src="images/Choco.png" alt="">
+                    <span class="pu-count" id="pu-count-colorBomb">0</span>
+                </button>
+                <button class="pu-btn" id="pu-extraMoves" data-pu="extraMoves" title="+5 Moves" disabled>
+                    <span class="pu-extra-icon">+5</span>
+                    <span class="pu-count" id="pu-count-extraMoves">0</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="victory-screen" class="overlay-screen hidden">
+        <canvas id="confetti-canvas"></canvas>
+        <div class="victory-card">
+            <div class="victory-trophy"><i class="icon-trophy"></i></div>
+            <h1 class="victory-title">Level Complete!</h1>
+            <div id="new-highscore-banner" class="new-highscore-banner hidden">🏆 NEW BEST SCORE!</div>
+            <div class="victory-stars-row" id="victory-stars">
+                <span class="v-star"><i class="icon-star"></i></span>
+                <span class="v-star"><i class="icon-star"></i></span>
+                <span class="v-star"><i class="icon-star"></i></span>
+            </div>
+            <div class="victory-stats">
+                <div class="v-stat"><span>Score</span><span id="victory-score" class="v-val">0</span></div>
+                <div class="v-stat"><span>Moves Left</span><span id="victory-moves" class="v-val">0</span></div>
+                <div class="v-stat"><span>Best Combo</span><span id="victory-combo" class="v-val">x0</span></div>
+            </div>
+            <div class="victory-buttons">
+                <button id="next-level-btn" class="v-btn primary">Next Level <i class="icon-arrow-right"></i></button>
+                <button id="replay-btn" class="v-btn">Replay</button>
+                <button id="victory-menu-btn" class="v-btn">Menu</button>
+            </div>
+        </div>
+    </div>   
+    
+    <div id="gameover-screen" class="overlay-screen hidden">     
+        <div class="gameover-card">
+            <div class="gameover-icon"><i class="icon-broken-heart"></i></div>     
+            <h1 class="gameover-title">Game Over</h1>
+            <p class="gameover-sub">So close! Try again?</p>
+            <div class="gameover-score-info">
+                <span id="go-score">0</span> / <span id="go-target">0</span>
+            </div>    
+            <div class="gameover-buttons">
+                <button id="retry-btn" class="go-btn primary"><i class="icon-retry"></i> Try Again</button>
+                <button id="go-menu-btn" class="go-btn">Menu</button>
+            </div>
+        </div>
+    </div>     
+      
+    <div id="toast-container" class="toast-container"></div>
+  
+    <audio id="bg-music" loop preload="auto">
+        <source src="candy_crush_saga.mp3" type="audio/mpeg">
+    </audio>
+    <script src="script.js"></script>  
+</body> 
 </html>
+   
+
