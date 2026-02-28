@@ -1,32 +1,32 @@
-const AudioManager = {
-    ctx: null,
-    init() {
-        if (!this.ctx) {
-            try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {}
+const AudioManager={
+    ctx:null,
+    init(){
+        if(!this.ctx) {
+            try{this.ctx =new(window.AudioContext || window.webkitAudioContext)();} catch (e){}
         }
     },
-    play(type) {
+    play(type){
         if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
+        const now =this.ctx.currentTime;
+        const osc =this.ctx.createOscillator();
+        const gain =this.ctx.createGain();
         osc.connect(gain);
         gain.connect(this.ctx.destination);
-        const sounds = {
-            select:    { f: 600, t: 'sine',     d: 0.1, v: 0.15 },
-            swap:      { f: 500, t: 'triangle', d: 0.15, v: 0.12 },
-            match:     { f: 800, t: 'sine',     d: 0.2, v: 0.15 },
-            bigMatch:  { f: 1000, t: 'square',  d: 0.25, v: 0.12 },
-            special:   { f: 1200, t: 'sawtooth', d: 0.35, v: 0.1 },
-            combo:     { f: 900, t: 'sine',     d: 0.3, v: 0.14 },
-            noMatch:   { f: 250, t: 'square',   d: 0.2, v: 0.1 },
-            victory:   { f: 523, t: 'sine',     d: 0.8, v: 0.15 },
-            gameOver:  { f: 200, t: 'sawtooth', d: 0.6, v: 0.1 },
-            click:     { f: 440, t: 'sine',     d: 0.08, v: 0.1 },
-            hint:      { f: 700, t: 'triangle', d: 0.15, v: 0.12 },
-            shuffle:   { f: 350, t: 'square',   d: 0.2, v: 0.1 },
-            star:      { f: 1100, t: 'sine',    d: 0.3, v: 0.12 },
-            colorBomb: { f: 300, t: 'sawtooth', d: 0.5, v: 0.13 },
+        const sounds={
+            select:{f:600,t:'sine',d:0.1,v:0.15},
+            swap:{f:500,t:'triangle',d:0.15,v:0.12},
+            match:{f:800,t:'sine',d:0.2,v:0.15},
+            bigMatch:{f:1000,t:'square',d:0.25, v:0.12},
+            special:{f:1200,t:'sawtooth',d:0.35,v:0.1},
+            combo:{f:900,t:'sine',d:0.3,v:0.14},
+            noMatch:{f:250,t:'square',d:0.2,v:0.1},
+            victory:{f:523,t:'sine',d:0.8,v:0.15},
+            gameOver:{f:200,t:'sawtooth',d:0.6,v:0.1},
+            click:{f:440,t:'sine',d:0.08,v:0.1},
+            hint:{f:700,t:'triangle',d:0.15,v:0.12},
+            shuffle:{f:350,t:'square',d:0.2,v:0.1},
+            star:{f:1100,t:'sine',d:0.3,v:0.12},
+            colorBomb:{f:300,t:'sawtooth',d:0.5,v:0.13},
         };
         const s = sounds[type] || sounds.click;
         osc.type = s.t;    
