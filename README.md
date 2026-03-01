@@ -67,24 +67,9 @@ This is a fully hand-built **Candy Crush Saga clone** — made with pure HTML, C
 - ✨ **Special Candies** — striped, wrapped, and color bombs that chain into glorious chaos
 - 🎯 **Play to the last move** — you always play until your moves run out, then the stars decide
 
----
 
-## 🍭 Candy Types
-
-| Candy | What it does |
-|-------|-------------|
-| Normal Candy | Match 3 or more to clear them |
-| Striped Candy | Clears an entire row or column |
-| Wrapped Candy | Explodes in a 3×3 area around it |
-| Color Bomb | Clears every candy of a chosen color from the board |
-| Blocker | Immune to direct matches — needs adjacent clears to break |
-
----
 
 ## 🚀 How to Play
-
-Just open `index.html` in any browser. That's genuinely it.
-
 - **Click or drag** to swap adjacent candies
 - **Match 3 or more** of the same color to clear them
 - **Hit the 1-star score** before moves run out to clear the level
@@ -92,54 +77,3 @@ Just open `index.html` in any browser. That's genuinely it.
 - **Use powerups** from the bar at the bottom of the game screen when things get rough
 
 > You always play until your last move. No early endings. Make every swap count.
-
----
-
-## 🛠 Built With
-
-- **HTML** — structure
-- **CSS** — all the color, animation, and candy-brain visuals
-- **JavaScript** — every swap, every match, every cascade, every feeling
-- **localStorage** — your progress, your scores, your profile — all saved in your browser
-
-No installation. No setup. No dependencies. Just open and play.
-
----
-
-## 📁 Project Structure
-
-```
-├── index.html      # The whole game lives here
-├── style.css       # Every color, animation, and layout decision
-├── script.js       # The brain — all logic, all levels, all love
-├── images/         # Candy images and UI assets
-└── README.md       # You're reading it right now
-```
-
----
-
-## 💬 One Last Thing
-
-If you play this and it makes you smile — even for a second — please share it. Send it to your sibling. Send it to that friend you used to play games with. Send it to your mom (she'll get to level 60 before you do, just accept it).
-
-Games like this have a quiet magic to them. They remind us of people. They remind us of time. They remind us that some of the simplest things leave the deepest marks.
-
-This was built by me, for all of you. I hope it finds you well.
-
----
-
-## 👾 Credits
-
-- **Original game:** Candy Crush Saga by King *(this is a fan-made clone for personal and educational use)*
-- **Built entirely by:** Me, with a lot of love and an unreasonable number of open browser tabs
-- **Dedicated to:** Everyone who ever fought with their sibling over one phone on a Sunday afternoon
-
----
-
-## 📜 License
-
-Personal and educational use only. Not for commercial distribution. The original Candy Crush Saga belongs to King — this is just a tribute, made from memory and feeling.
-
----
-
-*"Some games you don't just play. You remember."* 🍬

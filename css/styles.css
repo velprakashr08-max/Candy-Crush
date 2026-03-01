@@ -1,0 +1,72 @@
+ @import url('components/buttons.css');
+@import url('components/animations.css');
+@import url('components/utilities.css');
+@import url('screens/start-screen.css');
+@import url('screens/level-screen.css');
+@import url('screens/game-screen.css');
+@import url('screens/victory-screen.css');
+@import url('screens/gameover-screen.css');
+@import url('screens/modals.css');
+
+:root {
+    --candy-size: 60px;
+    --board-gap: 3px;
+    --primary-pink: #ff6b9d;
+    --primary-purple: #a855f7;
+    --primary-blue: #4ecdc4;
+    --bg-gradient: linear-gradient(135deg, #ffe6f0 0%, #fff0e6 100%);
+    --text-dark: #2d1b3c;
+    --shadow-soft: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-dark);
+    overflow: hidden;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+.screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+}
+
+.hidden {
+    display: none !important;
+}

@@ -1,99 +1,59 @@
+const CANDY_TYPES=['Red','Blue','Green','Yellow','Orange','Purple'];
 const AudioManager={
-    ctx:null,
-    init(){
-        if(!this.ctx) {
-            try{this.ctx =new(window.AudioContext || window.webkitAudioContext)();} catch (e){}
-        }
-    },
-    play(type){
-        if (!this.ctx) return;
-        const now =this.ctx.currentTime;
-        const osc =this.ctx.createOscillator();
-        const gain =this.ctx.createGain();
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        const sounds={
-            select:{f:600,t:'sine',d:0.1,v:0.15},
-            swap:{f:500,t:'triangle',d:0.15,v:0.12},
-            match:{f:800,t:'sine',d:0.2,v:0.15},
-            bigMatch:{f:1000,t:'square',d:0.25, v:0.12},
-            special:{f:1200,t:'sawtooth',d:0.35,v:0.1},
-            combo:{f:900,t:'sine',d:0.3,v:0.14},
-            noMatch:{f:250,t:'square',d:0.2,v:0.1},
-            victory:{f:523,t:'sine',d:0.8,v:0.15},
-            gameOver:{f:200,t:'sawtooth',d:0.6,v:0.1},
-            click:{f:440,t:'sine',d:0.08,v:0.1},
-            hint:{f:700,t:'triangle',d:0.15,v:0.12},
-            shuffle:{f:350,t:'square',d:0.2,v:0.1},
-            star:{f:1100,t:'sine',d:0.3,v:0.12},
-            colorBomb:{f:300,t:'sawtooth',d:0.5,v:0.13},
-        };
-        const s = sounds[type] || sounds.click;
-        osc.type = s.t;    
-        osc.frequency.setValueAtTime(s.f, now);    
-        if (type === 'victory') {
-            [523,659,784,1047].forEach((fr, i) => osc.frequency.setValueAtTime(fr, now + i * 0.18));
-        }
-        if (type === 'colorBomb') {          
-            osc.frequency.setValueAtTime(300, now);       
-            osc.frequency.linearRampToValueAtTime(1200, now + 0.3);  
-            osc.frequency.linearRampToValueAtTime(600, now + s.d);    
-        }   
-        if (type === 'combo') {         
-            osc.frequency.linearRampToValueAtTime(s.f * 1.5, now + s.d);
-        } 
-        gain.gain.setValueAtTime(s.v, now);           
-        gain.gain.exponentialRampToValueAtTime(0.001, now + s.d);     
-        osc.start(now);  
-        osc.stop(now + s.d + 0.01);                  
-    }              
+ctx:null,
+init(){
+ if(!this.ctx) {
+   try{this.ctx =new(window.AudioContext || window.webkitAudioContext)();} catch (e){}
+}
+},
+play(type){
+    if (!this.ctx) return;
+    const now =this.ctx.currentTime;
+const osc =this.ctx.createOscillator();
+const gain =this.ctx.createGain();
+ osc.connect(gain);
+gain.connect(this.ctx.destination);   
+const sounds={
+ select:{f:600,t:'sine',d:0.1,v:0.15},
+    swap:{f:500,t:'triangle',d:0.15,v:0.12},
+match:{f:800,t:'sine',d:0.2,v:0.15},
+bigMatch:{f:1000,t:'square',d:0.25, v:0.12},
+    special:{f:1200,t:'sawtooth',d:0.35,v:0.1},
+combo:{f:900,t:'sine',d:0.3,v:0.14},
+noMatch:{f:250,t:'square',d:0.2,v:0.1},
+ victory:{f:523,t:'sine',d:0.8,v:0.15},
+ gameOver:{f:200,t:'sawtooth',d:0.6,v:0.1},
+click:{f:440,t:'sine',d:0.08,v:0.1},
+hint:{f:700,t:'triangle',d:0.15,v:0.12},
+shuffle:{f:350,t:'square',d:0.2,v:0.1},
+star:{f:1100,t:'sine',d:0.3,v:0.12},
+colorBomb:{f:300,t:'sawtooth',d:0.5,v:0.13},
+};
+const s=sounds[type]||sounds.click;
+osc.type=s.t;    
+osc.frequency.setValueAtTime(s.f,now);    
+if(type ==='victory'){
+ [523,659,784,1047].forEach((fr,i)=>osc.frequency.setValueAtTime(fr,now+i*0.18));}
+if(type==='colorBomb'){          
+    osc.frequency.setValueAtTime(300,now);       
+    osc.frequency.linearRampToValueAtTime(1200,now +0.3);  
+osc.frequency.linearRampToValueAtTime(600,now +s.d);    
+}   
+if(type==='combo'){         
+    osc.frequency.linearRampToValueAtTime(s.f*1.5,now+s.d);
+} 
+ gain.gain.setValueAtTime(s.v,now);           
+gain.gain.exponentialRampToValueAtTime(0.001,now+s.d);     
+osc.start(now);  
+osc.stop(now+s.d+0.01);                  
+}              
 };          
-          
-
-const CANDY_TYPES = ['Red', 'Blue', 'Green', 'Yellow', 'Orange', 'Purple'];
-   
-const LEVELS = [  
-    {   
-        id: 1,
-        name: 'Sweet Start',
-        rows: 8,
-        cols: 8,
-        target: 1500,
-        moves: 30,
-        colors: ['Red', 'Blue', 'Green', 'Yellow'],
-        specialsEnabled: true,
-        blockers: 0,
-        star1: 0.33,
-        star2: 0.66,
-        star3: 1.0
+const LEVELS=[  
+    {id:1,name:'Sweet Start',rows:8,cols:8,target:1500,moves:30,colors:['Red','Blue','Green','Yellow'],specialsEnabled:true,blockers:0,star1:0.33,star2:0.66,star3:1.0
     },
-    {
-        id: 2,
-        name: 'Candy Storm',
-        rows: 8,
-        cols: 8,
-        target: 3000,
-        moves: 28,
-        colors: ['Red', 'Blue', 'Green', 'Yellow', 'Orange'],
-        specialsEnabled: true,
-        blockers: 3,
-        star1: 0.33,
-        star2: 0.66,
-        star3: 1.0
+    {id: 2,name:'Candy Storm',rows:8,cols:8,target:3000,moves:28,colors:['Red','Blue','Green','Yellow','Orange'],specialsEnabled:true,blockers:3,star1:0.33,star2:0.66,star3:1.0
     },
-    {
-        id: 3,
-        name: 'Sugar Rush',
-        rows: 8,
-        cols: 8,
-        target: 5000,
-        moves: 30,
-        colors: ['Red', 'Blue', 'Green', 'Yellow', 'Orange'],
-        specialsEnabled: true,
-        blockers: 5,
-        star1: 0.33,
-        star2: 0.66,
-        star3: 1.0
+    {id:3,name:'Sugar Rush',rows:8,cols:8,target:5000,moves:30,colors:['Red','Blue','Green','Yellow','Orange'],specialsEnabled:true,blockers:5,star1:0.33,star2:0.66,star3:1.0
     },
     {
         id: 4,
@@ -224,41 +184,21 @@ const LEVELS = [
 ];
 
 
-let game = {
-    board: [],
-    rows: 8,
-    cols: 8,
-    selected: null,
-    score: 0,
-    moves: 0,
-    target: 0,
-    level: 1,
-    isAnimating: false,
-    combo: 0,
-    maxCombo: 0,
-    hintTimeout: null,
-    colors: [],
-    specialsEnabled: false,
-    starsEarned: 0,
-    levelData: null,
-    dragStart: null,
-    isDragging: false,
-    dragGhost: null,
-    swapMode: false,
-    swapFirst: null,
+let game ={
+board:[],rows:8,cols:8,selected:null,score:0,moves:0,target:0,level:1,isAnimating:false,combo:0,maxCombo:0,hintTimeout:null,colors:[],specialsEnabled:false,starsEarned:0,levelData:null,dragStart:null,isDragging:false,dragGhost:null,swapMode:false,swapFirst:null,
 };
 
-let savedData = {
-    levelStars: {},   
-    bestScores: {},   
-    unlockedLevel: 1, 
-    coins: 100,
-    inventory: { extraMoves: 0, rowBlast: 0, colBlast: 0, colorBomb: 0, wrappedBlast: 0 },
-    profile: {
-        name: 'Player',
-        avatar: '🍬',
-        gamesPlayed: 0,
-        levelsWon: 0,
+let savedData ={
+levelStars:{},   
+bestScores:{},   
+    unlockedLevel:1, 
+    coins:100,
+    inventory:{extraMoves:0,rowBlast:0,colBlast:0,colorBomb:0,wrappedBlast:0},
+    profile:{
+        name:'Player',
+        avatar:'🍬',
+        gamesPlayed:0,
+        levelsWon:0,     
     },
 };
 
@@ -1623,14 +1563,14 @@ function activateSpecial(candy, r, c) {
             }
         }
         showExplosionEffect(r, c); 
-    } else if (candy.special === 'color-bomb') {
-        
-        const targetColor = candy._bombTargetColor || findBestBombColor(r, c);
+    } else if (candy.special === 'color-bomb'){
+           
+        const targetColor = candy._bombTargetColor || findBestBombColor(r,c);
         if (targetColor) {
-            for (let rr = 0; rr < game.rows; rr++) {
-                for (let cc = 0; cc < game.cols; cc++) {
+            for (let rr = 0; rr < game.rows; rr++){
+                for (let cc = 0; cc < game.cols;cc++) {
                     if (game.board[rr][cc]?.color === targetColor && game.board[rr][cc].type !== 'blocker') {
-                        cleared.push({ r: rr, c: cc });
+                        cleared.push({r:rr,c:cc});
                     }
                 }
             }
@@ -2357,13 +2297,13 @@ function showToast(msg, type = 'info') {
     toast.textContent = msg;
     toastContainer.appendChild(toast);
     setTimeout(() => toast.remove(), 3000);
-} 
+}   
 
 function sleep(ms) {
     return new Promise(r => setTimeout(r, ms));
 }  
 
-
+    
 document.addEventListener('DOMContentLoaded', () => {
     loadData();
     renderProfile();   

@@ -213,7 +213,7 @@
             <div class="level-header-center">
                 <h2 class="level-screen-title">Select Level</h2>
                 <div class="coin-chip level-coin-chip">
-                    <span class="coin-icon">🪙</span>
+                  <span class="coin-icon">🪙</span>
                     <span class="coin-count-display">0</span>
                 </div>
             </div>
@@ -420,14 +420,360 @@
                     <img src="images/Blue-Striped-Horizontal.png" class="deco-candy dc2" alt="">
                     <img src="images/Green-Wrapped.png" class="deco-candy dc3" alt="">
                 </div>
-
+                                              
             </div>
-        </div>
+        </div>      
     </div>
 
     <div id="game-screen" class="screen game-screen hidden">
         <div class="game-ui">
         
+            <div class="game-top-bar">
+                <button id="game-back-btn" class="game-icon-btn"><i class="icon-close"></i></button>
+                <div class="game-info-bar">
+                    <div class="info-block target-block">
+                        <span class="info-label">TARGET</span>
+                        <span class="info-value" id="target-score">3000</span>
+                    </div>
+                    <div class="info-block score-block">    
+                        <span class="info-label">SCORE</span>
+                        <span class="info-value" id="current-score">0</span>
+                    </div>
+                    <div class="info-block moves-block">
+                        <span class="info-label">MOVES</span>
+                        <span class="info-value" id="moves-left">25</span>
+                    </div>    
+                </div>
+                <button id="game-shop-btn" class="shop-icon-btn small" title="Shop">
+                    <img src="images/shop.png" alt="Shop">
+                </button>
+            </div>
+                                            
+            <div class="progress-bar-wrap">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                </div>
+                <div class="progress-stars">
+                    <span class="p-star" data-at="33" id="pstar1"><i class="icon-star"></i></span>
+                    <span class="p-star" data-at="66" id="pstar2"><i class="icon-star"></i></span>
+                    <span class="p-star" data-at="98" id="pstar3"><i class="icon-star"></i></span>
+                </div>                                                                                          
+            </div>
+                                                                                                
+            <div class="combo-display hidden" id="combo-display">
+                <span class="combo-text" id="combo-text">COMBO x2!</span>
+            </div>
+     
+            <div class="board-wrapper">
+                <div id="game-board" class="game-board"></div>
+                <div id="score-popups" class="score-popups"></div>
+            </div>
+        
+            <div class="game-controls">
+                <button id="hint-btn" class="ctrl-btn"><i class="icon-hint"></i> Hint</button>
+                <button id="shuffle-btn" class="ctrl-btn"><i class="icon-shuffle"></i> Shuffle</button>
+            </div>
+            <!-- Powerup Bar -->
+            <div class="powerup-bar" id="powerup-bar">
+                <button class="pu-btn" id="pu-rowBlast" data-pu="rowBlast" title="Row Blast" disabled>
+                    <img src="images/Red-Striped-Horizontal.png" alt="">
+                    <span class="pu-count" id="pu-count-rowBlast">0</span>
+                </button>
+                <button class="pu-btn" id="pu-colBlast" data-pu="colBlast" title="Col Blast" disabled>
+                    <img src="images/Red-Striped-Vertical.png" alt="">
+                    <span class="pu-count" id="pu-count-colBlast">0</span>
+                </button>
+                <button class="pu-btn" id="pu-wrappedBlast" data-pu="wrappedBlast" title="Wrapped Blast" disabled>
+                    <img src="images/Red-Wrapped.png" alt="">
+                    <span class="pu-count" id="pu-count-wrappedBlast">0</span>
+                </button>
+                <button class="pu-btn" id="pu-colorBomb" data-pu="colorBomb" title="Color Bomb" disabled>
+                    <img src="images/Choco.png" alt="">
+                    <span class="pu-count" id="pu-count-colorBomb">0</span>
+                </button>
+                <button class="pu-btn" id="pu-extraMoves" data-pu="extraMoves" title="+5 Moves" disabled>
+                    <span class="pu-extra-icon">+5</span>
+                    <span class="pu-count" id="pu-count-extraMoves">0</span>
+                </button>
+            </div>
+        </div>            
+    </div>
+
+    
+    <div id="victory-screen" class="overlay-screen hidden">
+        <canvas id="confetti-canvas"></canvas>      
+        <div class="victory-card">     
+            <div class="victory-trophy"><i class="icon-trophy"></i></div>
+            <h1 class="victory-title">Level Complete!</h1>
+            <div id="new-highscore-banner" class="new-highscore-banner hidden">🏆 NEW BEST SCORE!</div>
+            <div class="victory-stars-row" id="victory-stars">
+                <span class="v-star"><i class="icon-star"></i></span>
+                <span class="v-star"><i class="icon-star"></i></span>      
+                <span class="v-star"><i class="icon-star"></i></span>      
+            </div>              
+            <div class="victory-stats">                             
+                <div class="v-stat"><span>Score</span><span id="victory-score" class="v-val">0</span></div>
+                <div class="v-stat"><span>Moves Left</span><span id="victory-moves" class="v-val">0</span></div>
+                <div class="v-stat"><span>Best Combo</span><span id="victory-combo" class="v-val">x0</span></div>
+            </div>
+            <div class="victory-buttons">
+                <button id="next-level-btn" class="v-btn primary">Next Level <i class="icon-arrow-right"></i></button>
+                <button id="replay-btn" class="v-btn">Replay</button>
+                <button id="victory-menu-btn" class="v-btn">Menu</button>
+            </div>
+        </div>
+    </div>        
+    
+    <div id="gameover-screen" class="overlay-screen hidden">     
+        <div class="gameover-card">
+            <div class="gameover-icon"><i class="icon-broken-heart"></i></div>     
+            <h1 class="gameover-title">Game Over</h1>
+            <p class="gameover-sub">So close! Try again?</p>
+            <div class="gameover-score-info">
+                <span id="go-score">0</span> / <span id="go-target">0</span>     
+            </div>    
+            <div class="gameover-buttons">
+                <button id="retry-btn" class="go-btn primary"><i class="icon-retry"></i> Try Again</button>
+                <button id="go-menu-btn" class="go-btn">Menu</button>
+            </div>
+        </div>
+    </div>     
+      
+    <div id="toast-container" class="toast-container"></div>
+  
+    <audio id="bg-music" loop preload="auto">
+        <source src="candy_crush_saga.mp3" type="audio/mpeg">
+    </audio>
+    <script src="script.js"></script>  
+</body> 
+</html>
+   
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Candy Crush Saga</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>                           
+    <!-- START SCREEN -->
+    <div id="start-screen" class="screen start-screen">
+        <div class="start-top-right">
+            <div class="start-icon-group">
+                <button id="start-shop-btn" class="shop-icon-btn" title="Shop">
+                    <img src="images/shop.png" alt="Shop">     
+                </button>
+                <span class="start-icon-label">Shop</span>
+            </div>
+            <button id="profile-open-btn" class="profile-chip">
+                <span id="hud-avatar" class="hud-avatar">🍬</span>
+                <span id="hud-name" class="hud-name">Player</span>
+            </button>
+        </div>
+        <div class="start-top-left">
+            <div class="coin-chip" id="start-coin-chip">
+                <span class="coin-icon">🪙</span>
+                <span class="coin-count-display">0</span>
+            </div>
+            <button id="music-toggle-btn" class="music-toggle-btn" title="Toggle Music">🎵</button>
+        </div>
+        <div class="start-content">
+            <h1 class="start-title">                       
+                <span class="title-candy">CANDY</span>
+                <span class="title-crush">CRUSH</span>          
+                <span class="title-saga">SAGA</span>              
+            </h1>  
+            <button id="start-btn" class="start-play-btn">
+                <span>PLAY</span>
+            </button>
+            <button id="how-to-play-btn" class="how-to-play-open-btn">HOW TO PLAY</button>
+            <div class="start-candy-row">
+                <img src="images/Red.png" class="float-candy" style="--delay:0s" alt="">
+                <img src="images/Blue.png" class="float-candy" style="--delay:0.3s" alt="">
+                <img src="images/Green.png" class="float-candy" style="--delay:0.6s" alt="">
+                <img src="images/Yellow.png" class="float-candy" style="--delay:0.9s" alt="">
+                <img src="images/Orange.png" class="float-candy" style="--delay:1.2s" alt="">
+                <img src="images/Purple.png" class="float-candy" style="--delay:1.5s" alt="">
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFILE MODAL -->
+    <div id="profile-screen" class="htp-overlay hidden">
+        <div class="htp-modal profile-modal">
+            <button class="htp-close-btn" id="profile-close-btn">&#x2715;</button>
+            <h2 class="htp-title">My Profile</h2>
+            <div class="avatar-section">
+                <div class="avatar-display" id="avatar-display">🍬</div>
+                <div class="avatar-grid">
+                    <button class="av-btn" data-av="🍬">🍬</button>
+                    <button class="av-btn" data-av="🍭">🍭</button>
+                    <button class="av-btn" data-av="🍫">🍫</button>
+                    <button class="av-btn" data-av="🍩">🍩</button>
+                    <button class="av-btn" data-av="🍪">🍪</button>
+                    <button class="av-btn" data-av="🎂">🎂</button>
+                    <button class="av-btn" data-av="🌈">🌈</button>
+                    <button class="av-btn" data-av="⭐">⭐</button>
+                    <button class="av-btn" data-av="🔥">🔥</button>
+                    <button class="av-btn" data-av="💎">💎</button>
+                    <button class="av-btn" data-av="🦄">🦄</button>
+                    <button class="av-btn" data-av="👑">👑</button>
+                </div>
+            </div>
+            <div class="profile-name-row">
+                <label class="profile-label">Your Name</label>
+                <input id="profile-name-input" class="profile-input" type="text"
+                       maxlength="16" placeholder="Enter your name...">
+            </div>
+            <div class="profile-stats-grid">
+                <div class="pstat">
+                    <span class="pstat-val" id="pstat-levels">0</span>
+                    <span class="pstat-label">Levels Won</span>
+                </div>
+                <div class="pstat">
+                    <span class="pstat-val" id="pstat-stars">0</span>
+                    <span class="pstat-label">Total Stars</span>
+                </div>
+                <div class="pstat">
+                    <span class="pstat-val" id="pstat-best">0</span>
+                    <span class="pstat-label">Top Score</span>
+                </div>
+            </div>
+            <button class="htp-got-it-btn" id="profile-save-btn">Save Profile</button>
+        </div>
+    </div>
+
+    <!-- SHOP MODAL -->
+    <div id="shop-screen" class="htp-overlay hidden">
+        <div class="htp-modal shop-modal">
+            <button class="htp-close-btn" id="shop-close-btn">&#x2715;</button>
+            <h2 class="htp-title">Sweet Shop</h2>
+            <div class="shop-coins-bar">
+                <span class="coin-icon">🪙</span>
+                <span id="shop-coin-count">0</span>&nbsp;Coins
+            </div>
+            <div class="shop-items">
+                <div class="shop-item">
+                    <img src="images/Red-Striped-Horizontal.png" class="shop-item-img" alt="">
+                    <div class="shop-item-info">
+                        <span class="shop-item-name">Row Blast</span>
+                        <span class="shop-item-desc">Clears an entire row</span>
+                        <span class="shop-item-own">Owned: <b id="own-rowBlast">0</b></span>
+                    </div>
+                    <button class="shop-buy-btn" data-item="rowBlast" data-cost="80">🪙 80</button>
+                </div>
+                <div class="shop-item">
+                    <img src="images/Red-Striped-Vertical.png" class="shop-item-img" alt="">
+                    <div class="shop-item-info">
+                        <span class="shop-item-name">Col Blast</span>
+                        <span class="shop-item-desc">Clears an entire column</span>
+                        <span class="shop-item-own">Owned: <b id="own-colBlast">0</b></span>
+                    </div>
+                    <button class="shop-buy-btn" data-item="colBlast" data-cost="80">🪙 80</button>
+                </div>
+                <div class="shop-item">
+                    <img src="images/Red-Wrapped.png" class="shop-item-img" alt="">
+                    <div class="shop-item-info">
+                        <span class="shop-item-name">Wrapped Blast</span>
+                        <span class="shop-item-desc">3×3 explosion at center</span>
+                        <span class="shop-item-own">Owned: <b id="own-wrappedBlast">0</b></span>
+                    </div>
+                    <button class="shop-buy-btn" data-item="wrappedBlast" data-cost="100">🪙 100</button>
+                </div>
+                <div class="shop-item">
+                    <img src="images/Choco.png" class="shop-item-img" alt="">
+                    <div class="shop-item-info">
+                        <span class="shop-item-name">Color Bomb</span>
+                        <span class="shop-item-desc">Destroys all of one color</span>
+                        <span class="shop-item-own">Owned: <b id="own-colorBomb">0</b></span>
+                    </div>
+                    <button class="shop-buy-btn" data-item="colorBomb" data-cost="120">🪙 120</button>
+                </div>
+                <div class="shop-item">
+                    <div class="shop-extra-moves-img">+5</div>
+                    <div class="shop-item-info">
+                        <span class="shop-item-name">Extra Moves</span>
+                        <span class="shop-item-desc">Adds 5 moves instantly</span>
+                        <span class="shop-item-own">Owned: <b id="own-extraMoves">0</b></span>
+                    </div>
+                    <button class="shop-buy-btn" data-item="extraMoves" data-cost="150">🪙 150</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HOW TO PLAY MODAL -->
+    <div id="how-to-play-screen" class="htp-overlay hidden">
+        <div class="htp-modal">
+            <button class="htp-close-btn" id="htp-close-btn">&#x2715;</button>
+            <h2 class="htp-title">HOW TO PLAY</h2>
+            <div class="htp-steps">
+                <div class="htp-step">
+                    <div class="htp-step-icon">🍬</div>
+                    <div class="htp-step-text">
+                        <strong>Swap Candies</strong>
+                        <p>Click or Drag two adjacent candies to swap their positions.</p>
+                    </div>
+                </div>
+                <div class="htp-step">
+                    <div class="htp-step-icon">🌟</div>
+                    <div class="htp-step-text">
+                        <strong>Match 3 or More</strong>
+                        <p>Line up 3+ candies of the same color in the row or column to crush them.</p>
+                    </div>
+                </div>
+                <div class="htp-step">
+                    <div class="htp-step-icon">⭐</div>
+                    <div class="htp-step-text">
+                        <strong>Reach the Target</strong>
+                        <p>Score enough points before your moves run out to earn stars and win!</p>
+                    </div>
+                </div>
+                <div class="htp-step">
+                    <div class="htp-step-icon">💥</div>
+                    <div class="htp-step-text">
+                        <strong>Special Candies</strong>
+                        <p>Match 4 in a row for a Striped Candy. Match 5 for a Rainbow candy that clears any color!</p>
+                    </div>
+                </div>
+            </div>
+            <button class="htp-got-it-btn" id="htp-got-it-btn">Got IT!</button>
+        </div>
+    </div>
+
+    <!-- LEVEL SCREEN -->
+    <div id="level-screen" class="screen level-screen hidden">
+        <div class="level-header-bar">
+            <button id="level-shop-btn" class="shop-icon-btn small" title="Shop">
+                <img src="images/shop.png" alt="Shop">
+            </button>
+            <div class="level-header-center">
+                <h2 class="level-screen-title">Select Level</h2>
+                <div class="coin-chip level-coin-chip">
+                    <span class="coin-icon">🪙</span>
+                    <span class="coin-count-display">0</span>
+                </div>
+            </div>
+            <button id="level-profile-btn" class="profile-chip small">
+                <span id="level-hud-avatar" class="hud-avatar">🍬</span>
+                <span id="level-hud-name" class="hud-name">Player</span>
+            </button>
+        </div>
+        <div class="level-map-scroll">
+            <div class="level-map">
+                <!-- Level 1-12 cards will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- GAME SCREEN -->
+    <div id="game-screen" class="screen game-screen hidden">
+        <div class="game-ui">
             <div class="game-top-bar">
                 <button id="game-back-btn" class="game-icon-btn"><i class="icon-close"></i></button>
                 <div class="game-info-bar">
@@ -473,7 +819,7 @@
                 <button id="hint-btn" class="ctrl-btn"><i class="icon-hint"></i> Hint</button>
                 <button id="shuffle-btn" class="ctrl-btn"><i class="icon-shuffle"></i> Shuffle</button>
             </div>
-            <!-- Powerup Bar -->
+            
             <div class="powerup-bar" id="powerup-bar">
                 <button class="pu-btn" id="pu-rowBlast" data-pu="rowBlast" title="Row Blast" disabled>
                     <img src="images/Red-Striped-Horizontal.png" alt="">
@@ -499,7 +845,7 @@
         </div>
     </div>
 
-    
+    <!-- VICTORY SCREEN -->
     <div id="victory-screen" class="overlay-screen hidden">
         <canvas id="confetti-canvas"></canvas>
         <div class="victory-card">
@@ -524,6 +870,7 @@
         </div>
     </div>   
     
+    <!-- GAME OVER SCREEN -->
     <div id="gameover-screen" class="overlay-screen hidden">     
         <div class="gameover-card">
             <div class="gameover-icon"><i class="icon-broken-heart"></i></div>     
@@ -544,8 +891,14 @@
     <audio id="bg-music" loop preload="auto">
         <source src="candy_crush_saga.mp3" type="audio/mpeg">
     </audio>
-    <script src="script.js"></script>  
+    <script src="js/constants.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/board.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
 </body> 
 </html>
-   
-
